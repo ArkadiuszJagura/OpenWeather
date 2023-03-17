@@ -15,9 +15,13 @@ public class WeatherService {
     private RestTemplate restTemplate = new RestTemplate();
 
     public WeatherDto getWeather() {
-        String response = restTemplate.getForObject(WEATHER_URL + "weather?q={locality}&appid={apiKey}&units=metric&lang=pl",
-                String.class, "Skwierzyna", API_KEY);
+        String response = getWeatherForLocality("skwierzyna");
         log.info(response);
         return null;
+    }
+
+    private String getWeatherForLocality(String locality) {
+        return restTemplate.getForObject(WEATHER_URL + "weather?q={locality}&appid={apiKey}&units=metric&lang=pl",
+                String.class, locality, API_KEY);
     }
 }
