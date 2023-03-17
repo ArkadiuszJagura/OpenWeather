@@ -1,27 +1,25 @@
 package net.jagura.weather.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.jagura.weather.model.WeatherDto;
+import net.jagura.weather.webclient.WeatherClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class WeatherService {
 
-    private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/";
-    private static final String API_KEY = "fdf139e86da1b9b2bd61888b37bc6b86";
-    private RestTemplate restTemplate = new RestTemplate();
+    private final WeatherClient weatherClient;
 
     public WeatherDto getWeather() {
-        String response = getWeatherForLocality("skwierzyna");
+        String response = weatherClient.getWeatherForLocality("skwierzyna");
         log.info(response);
         return null;
     }
 
-    private String getWeatherForLocality(String locality) {
-        return restTemplate.getForObject(WEATHER_URL + "weather?q={locality}&appid={apiKey}&units=metric&lang=pl",
-                String.class, locality, API_KEY);
-    }
+
 }
