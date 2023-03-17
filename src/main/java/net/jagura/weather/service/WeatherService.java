@@ -11,11 +11,12 @@ import org.springframework.web.client.RestTemplate;
 public class WeatherService {
 
     private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/";
+    private static final String API_KEY = "fdf139e86da1b9b2bd61888b37bc6b86";
     private RestTemplate restTemplate = new RestTemplate();
 
     public WeatherDto getWeather() {
-        String response = restTemplate.getForObject(WEATHER_URL + "weather?q=brwinow&appid=fdf139e86da1b9b2bd61888b37bc6b86&units=metric&lang=pl",
-                String.class);
+        String response = restTemplate.getForObject(WEATHER_URL + "weather?q={locality}&appid={apiKey}&units=metric&lang=pl",
+                String.class, "Skwierzyna", API_KEY);
         log.info(response);
         return null;
     }
